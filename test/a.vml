@@ -1,0 +1,13 @@
+
+import "defineio";
+import "definestring";
+
+fn main() -> ui8
+{
+    i64 a = defineio::gets() as i64;
+    i64 b = defineio::gets() as i64;
+    definestring::string c = (a + b) as definestring::string;
+    defineio::println(c);
+    ret 0;
+}
+
