@@ -15,10 +15,11 @@ using i64 = int64_t;
 
 using f32 = float;
 using f64 = double;
+
 #if defined(__LDBL_MANT_DIG__) || defined(LDBL_MANT_DIG)
     using f128 = long double;
 #endif
 
 extern bool has_f128;
-extern constexpr ui16 bufferSize;
+constexpr ui16 bufferSize = 0x1000;
 extern std::array<ui8, bufferSize> buffer;

@@ -9,4 +9,4 @@
 #include <cctype>
 #include <set>
 
-extern const set<char> SYMBOL;
+extern const std::set<char> SYMBOL;
