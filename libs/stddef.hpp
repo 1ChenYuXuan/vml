@@ -1,4 +1,6 @@
 
+#pragma once
+
 #include <cmath>
 #include <array>
 #include <cstdlib>
@@ -23,3 +25,7 @@ using f64 = double;
 extern bool has_f128;
 constexpr ui16 bufferSize = 0x1000;
 extern std::array<ui8, bufferSize> buffer;
+
+constexpr ui16 registerSize = 0x0400;
+extern std::array<ui8, registerSize> registers;
+

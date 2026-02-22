@@ -46,3 +46,5 @@ start:
  as b 7.
 
 ```
+
+- if you want to read more, please read readme.txt

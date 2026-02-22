@@ -1,4 +1,6 @@
 
+#pragma once
+
 #include "stddef.hpp"
 #include <iostream>
 #include <vector>
