@@ -29,3 +29,28 @@ extern std::array<ui8, bufferSize> buffer;
 constexpr ui16 registerSize = 0x0400;
 extern std::array<ui8, registerSize> registers;
 
+enum class cmd: ui16
+{
+    add,
+    sub,
+    mul,
+    div,
+    big,
+    small,
+    equal,
+    band,
+    bor,
+    bnot,
+    
+    output,
+    input,
+    mov,
+    load,
+    store,
+    inc,
+    dec,
+    
+    cmp,
+    go,
+    capi
+};

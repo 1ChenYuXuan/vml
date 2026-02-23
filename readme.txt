@@ -1,31 +1,7 @@
+VML is a register-based virtual machine, as well as a template framework. It uses a 1024-byte (1KB) array, referred to as "registers", implemented via std::array<ui8, registerSize>. Here, registerSize is generally defined as 0x0400, and its implementation is located in ./libs/stddef.cpp.
+ 
+VML is divided into two subsets: BVML and CVML. In particular, CVML has a unique core feature: CAPI, which stands for "C Plusplus API". The compiler can provide interfaces similar to stddef.h in C and the standard algorithm library in C++ through this feature, which I have named stdapi.
 
-VML is a Register-based virtual machine. And it is a
-  template there. It can use a array and the
-  length of the array is 1024B as 1KB. It describe as
-  "registers". Use it through make a
-  std::array<ui8, registerSize>. Among, registerSize
-  generally defined as 0x0400. Its realization is in
-  ./libs/stddef.cpp.
-
-Among, the VML is divided into BVML and CVML.
-  In the fact, CVML has a exceptional function. It is 
-  the CAPI. Enlargement of CAPI is "C Plusplus API".
-  complie can provide an interface like stddef.h in C
-  and algorithm in C++. I decided to let it name stdapi.
-  For example of CAPI,
-  
-  import stdio as *;
-  import stdapi as *;
-  import stdstring as *;
-  import stdarg as *;
-  
-  fn main(STDARG_FOR_MAIN)
-  {
-    println(f64tostring(sqrt(3)));
-    ret 0;
-  }
-  Although actually, stdmath has the sqrt function too,
-  it also import the stdapi. In the fact, the f64tostring is a stdapi
-  too. CAPI let function execute into C Plusplus codes,
-  There is no cost. Actually, CAPI can use
-  most of variables in VML. It can make most of programs run faster.
+Note that while the stdmath standard library also provides the sqrt function, it also imports and relies on stdapi; in fact, the f64tostring function used in the example is also part of stdapi. CAPI allows functions to be executed directly via native C++ code with zero additional overhead. It can also access most variables in VML directly, which significantly improves the runtime performance of most programs.
+ 
+VML first reads the first 18 bytes of the input. If this segment matches the magic string This is use of VML, VML will then read an additional 1-byte value, which indicates the length of the data to be read next. All subsequent bytes follow this format. After that, VML starts to parse instructions: most instructions use 1 or 2 bytes to indicate their type, followed by the corresponding arguments (ARGS). These arguments are integer values stored in binary format
