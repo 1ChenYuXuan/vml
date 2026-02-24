@@ -1,9 +1,9 @@
 
 #include "string.hpp"
 
-const std::set<char> SYMBOL = {' ', '(', ')', '[', ']', '{', '}', '~',
-                               '<', '>', ';', '/', '=', '-',
-                               '*'};
+const std::set<char>
+SYMBOL = {' ', '(', ')', '[', ']', '{', '}', '~',
+             '<', '>', ';', '/', '=', '-', '*', '&', '|'};
 
 std::vector<std::string> good_str(const std::string& utf8_str)
 {

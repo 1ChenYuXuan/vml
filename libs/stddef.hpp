@@ -1,9 +1,17 @@
 
+// frist
+
 #pragma once
 
 #include <cmath>
 #include <array>
 #include <cstdlib>
+
+#if defined(_MSC_VER)
+#define ALWAYS_INLINE __forceinline
+#else
+#define ALWAYS_INLINE inline __attribute__((always_inline))
+#endif
 
 using ui8  = uint8_t;
 using ui16 = uint16_t;
@@ -29,8 +37,7 @@ extern std::array<ui8, bufferSize> buffer;
 constexpr ui16 registerSize = 0x0400;
 extern std::array<ui8, registerSize> registers;
 
-enum class cmd: ui16
-{
+enum class cmd: ui16 {
     add,
     sub,
     mul,
@@ -54,3 +61,5 @@ enum class cmd: ui16
     go,
     capi
 };
+
+

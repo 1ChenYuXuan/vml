@@ -1,0 +1,7 @@
+
+main:
+  capi string "Hello World" r0
+  capi print r0
+  ret
+
+
