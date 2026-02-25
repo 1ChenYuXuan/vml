@@ -1,12 +1,16 @@
 
-#include "string.hpp"
+
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Chen Yuxuan
+
+
+#include "_string.hpp"
 
 const std::set<char>
 SYMBOL = {' ', '(', ')', '[', ']', '{', '}', '~',
              '<', '>', ';', '/', '=', '-', '*', '&', '|'};
 
-std::vector<std::string> good_str(const std::string& utf8_str)
-{
+std::vector<std::string> good_str(const std::string& utf8_str) {
     std::vector<std::string> char_list;
     const unsigned char* bytes = reinterpret_cast<const unsigned char*>(utf8_str.data());
     size_t len = utf8_str.size();
@@ -91,8 +95,7 @@ void trim(std::string& s) {
 }
 
 // split_string_and_reserve_string
-std::vector<std::string> ssars(const std::string& str)
-{
+std::vector<std::string> ssars(const std::string& str) {
     std::vector<std::string> split_str;
     std::string temp;
     bool is_string = false;
@@ -133,8 +136,7 @@ std::vector<std::string> ssars(const std::string& str)
 }
 
 // split_string_and_reserve_string_and_split_symbol
-std::vector<std::string> ssarsass(const std::string& str)
-{
+std::vector<std::string> ssarsass(const std::string& str) {
     std::vector<std::string> split_str;
     std::string temp;
     bool is_string = false;

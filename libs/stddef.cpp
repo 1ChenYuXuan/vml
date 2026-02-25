@@ -1,4 +1,7 @@
 
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Chen Yuxuan
+
 #include "stddef.hpp"
 
 std::array<ui8, bufferSize> buffer;

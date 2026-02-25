@@ -1,4 +1,7 @@
 
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Chen Yuxuan
+
 #pragma once
 
 #include "stddef.hpp"

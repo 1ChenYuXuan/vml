@@ -1,4 +1,7 @@
 
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 Chen Yuxuan
+
 # As C++
 
 def lexer(codes) -> list[list[str]]:

@@ -1,24 +1,23 @@
 
-#include "algorithm.hpp"
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Chen Yuxuan
 
-#define transmitc auto&
-#define transmitv auto
-#define transmitvc auto&&
+#include "algorithm.hpp"
 
 // although it is non-conforming,
 // it as a syntactic sugar is very useful
 // Maybe
 
-ALWAYS_INLINE auto output(const std::string& str) {
+ALWAYS_INLINE void output(const std::string& str) {
     fputs(str.c_str(), stdout);
 }
 
-ALWAYS_INLINE auto output(const char* str) {
+ALWAYS_INLINE void output(const char* str) {
     fputs(str, stdout);
 }
 
-ALWAYS_INLINE auto output(const char c) {
-    putchar(buf, stdout);
+ALWAYS_INLINE void output(const char c) {
+    putchar( c );
 }
 
 ALWAYS_INLINE std::string input() {

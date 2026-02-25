@@ -1,13 +1,17 @@
 
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Chen Yuxuan
+
 #include "../../libs/stddef.hpp"
 #include "../../libs/algorithm.hpp"
+#include <fstream>
 #include <string>
 #include <array>
 #include <vector>
 
 int main(int argc, char *argv[]) {
     // Builds argnum and argvec first
-    using std::string, std::vector, std::array, ios::binary;
+    using std::string, std::vector, std::array, std::ios, std::ifstream;
     ui32 argnum = (ui32)argc;
     vector<string> argvec;
     for (ui32 index = 0; index < argnum; ++index)
@@ -19,8 +23,8 @@ int main(int argc, char *argv[]) {
     }
     
     vector<ui16> registersPlace;
-    path = argvec[1];
-    ifstream fin(path, binary);
+    string path = argvec[1];
+    ifstream fin(path, ios::binary);
     
     while (1)
     {

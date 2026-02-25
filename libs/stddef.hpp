@@ -1,4 +1,7 @@
 
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Chen Yuxuan
+
 // frist
 
 #pragma once
@@ -10,7 +13,7 @@
 #if defined(_MSC_VER)
 #define ALWAYS_INLINE __forceinline
 #else
-#define ALWAYS_INLINE inline __attribute__((always_inline))
+#define ALWAYS_INLINE __attribute__((always_inline))
 #endif
 
 using ui8  = uint8_t;
@@ -30,7 +33,6 @@ using f64 = double;
     using f128 = long double;
 #endif
 
-extern bool has_f128;
 constexpr ui16 bufferSize = 0x1000;
 extern std::array<ui8, bufferSize> buffer;
 
