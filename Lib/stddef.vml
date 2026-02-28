@@ -1,0 +1,19 @@
+
+namespace types {
+type i8 char;
+type ui64 size;
+type ui64 index;
+type i32 int;
+type i8 bool;
+}
+
+template<type T, type I>
+types::bool _in(T iter, I thing) {
+    for (type::index i = 0; i < iter.length; ++i) 
+        if (iter.at(index) == thing) 
+            return true;
+    return false;
+}
+
+operator infix in = _in; // XXX in ...
+                        // or operator infix __in__()

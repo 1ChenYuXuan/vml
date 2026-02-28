@@ -4,10 +4,10 @@ import "definestring";
 
 fn main() -> ui8
 {
-    i64 a = gets() as i64;
-    i64 b = gets() as i64;
-    string c = (a + b) as string;
-    println(c);
+    i64 a = std::gets() as i64;
+    i64 b = std::gets() as i64;
+    std::string c = (a + b) as std::string;
+    std::println(c);
     ret 0;
 }
 

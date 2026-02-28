@@ -8,3 +8,5 @@ VML first reads the first 18 bytes of the input. If this segment matches the mag
 
 How do it complier BVML or CVML Code For Modules? It is very easy. In the BVML or CVML, there is a keyword in it. It is "no" and "through". Simply put, complie can maintain a std::set<std::string>. If it meets the "no" keyword, It can check does std::set<std::string> contain the string. If the answer is right, it can cause a error. This is a perfect way to check for duplicate function and variable names across modules. "yes" keyword is a way to deleting the std::string.
 
+VML allows to make multiple Main Function. They to run in order of precedence.
+

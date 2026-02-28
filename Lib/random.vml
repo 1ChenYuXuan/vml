@@ -1,0 +1,46 @@
+
+import "array";
+import "time";
+
+namespace std {
+class rng {
+    private class self {
+        private seed;
+        public void self(seed=(std::time() * 0xFFFFFFFFFFFFFFFF) as ui64 {
+            if (seed == 0) 
+                seed = 1;
+            // set seed
+            this->seed = seed;
+        }
+        public ui32 createRandom() {
+            this->next();
+            return seed;
+        }
+        private void next() {
+            this->seed ^= this->seed << 13 & 0xFFFFFFFFFFFFFFFF;
+            this->seed ^= this->seed >> 7 & 0xFFFFFFFFFFFFFFFF;
+            this->seed ^= this->seed << 17 & 0xFFFFFFFFFFFFFFFF;
+        }
+    }
+    private std::array<ui64, 16> arr;
+    private ui8 index;
+    public void rng() {
+        rng::self r();
+        for (ui8 i = 0; i < 16; ++i)
+            this->arr[i] = r.createRandom();
+        index = 0;
+    }
+    public ui64 next() {
+        ui64 t = this->arr[this->index];
+        this->index = (this->index + 1) % 16;
+        ui64 s = this->arr[this->index];
+        t ^= t << 31;
+        t ^= t >> 11;
+        t ^= s ^ (s >> 30);
+        this->arr[index & 15] = t;
+        return (t * 1181783497276652981) as ui64;
+    }
+}
+}
+
+not std::rng;
