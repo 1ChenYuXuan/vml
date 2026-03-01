@@ -1,5 +1,6 @@
-VML is a register-based virtual machine, as well as a template framework. It uses a 1024-byte (1KB) array, referred to as "registers", implemented via std::array<ui8, registerSize>. Here, registerSize is generally defined as 0x0400, and its implementation is located in ./libs/stddef.cpp.
- 
+
+VML is a register-based virtual machine, as well as a template framework.
+
 VML is divided into two subsets: BVML and CVML. In particular, CVML has a unique core feature: CAPI, which stands for "C Plusplus API". The compiler can provide interfaces similar to stddef.h in C and the standard algorithm library in C++ through this feature, which I have named stdapi.
 
 Note that while the stdmath standard library also provides the sqrt function, it also imports and relies on stdapi; in fact, the f64tostring function used in the example is also part of stdapi. CAPI allows functions to be executed directly via native C++ code with zero additional overhead. It can also access most variables in VML directly, which significantly improves the runtime performance of most programs.

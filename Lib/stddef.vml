@@ -8,8 +8,8 @@ type i8 bool;
 }
 
 template<type T, type I>
-types::bool _in(T iter, I thing) {
-    for (type::index i = 0; i < iter.length; ++i) 
+types::bool _in(T iter, I thing) -> {
+    for (type::index i = 0; i < iter.length; ++i)
         if (iter.at(index) == thing) 
             return true;
     return false;

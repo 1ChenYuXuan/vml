@@ -11,10 +11,14 @@
 #include <cstdlib>
 
 #if defined(_MSC_VER)
-#define ALWAYS_INLINE __forceinline
+  #define ALWAYS_INLINE __forceinline
 #else
-#define ALWAYS_INLINE __attribute__((always_inline))
+  #define ALWAYS_INLINE __attribute__((always_inline))
 #endif
+
+#define transmitc auto&
+#define transmitv auto
+#define transmitvc auto&&
 
 using ui8  = uint8_t;
 using ui16 = uint16_t;
@@ -32,12 +36,6 @@ using f64 = double;
 #if defined(__LDBL_MANT_DIG__) || defined(LDBL_MANT_DIG)
     using f128 = long double;
 #endif
-
-constexpr ui16 bufferSize = 0x1000;
-extern std::array<ui8, bufferSize> buffer;
-
-constexpr ui16 registerSize = 0x0400;
-extern std::array<ui8, registerSize> registers;
 
 enum class cmd: ui16 {
     add,
@@ -64,4 +62,35 @@ enum class cmd: ui16 {
     capi
 };
 
+template<typename T, ui32 size>
+class Array // myself array
+{
+private:
+    T *p;
+public:
+    Array();
+    ~Array();
+    T operator[](ui32 index);
+    T *get();
+};
 
+template<typename T, ui32 size>
+Array<T, size>::Array() {
+    p = new T[size];
+}
+
+template<typename T, ui32 size>
+Array<T, size>::~Array() {
+    delete[] p;
+}
+
+template<typename T, ui32 size>
+T Array<T, size>::operator[](ui32 index) {
+    return p[index]; // Maybe cause Segment Error.
+                     // TODO: Throw
+}
+
+template<typename T, ui32 size>
+T *Array<T, size>::get() {
+    return p;
+}

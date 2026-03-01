@@ -9,10 +9,6 @@
 #include <cstdio>
 #include <string>
 
-#define transmitc auto&
-#define transmitv auto
-#define transmitvc auto&&
-
 ALWAYS_INLINE void output(const std::string& str);
 ALWAYS_INLINE void output(const char* str);
 ALWAYS_INLINE void output(const char c);
