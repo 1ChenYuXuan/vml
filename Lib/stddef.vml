@@ -1,5 +1,5 @@
 
-namespace types {
+namespace types -> {
 type i8 char;
 type ui64 size;
 type ui64 index;

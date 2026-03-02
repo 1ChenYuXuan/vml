@@ -1,0 +1,23 @@
+
+import "stdlib";
+import "stdstring";
+import "stdio";
+
+namespace std
+{
+    class Error {
+        private errorName;
+        public void Error(string errorName) {
+            this->errorName = errorName;
+        }
+        // So it can cause Error.
+        public void Cause(string info) {
+            string out = this->errorName + ": " + info;
+            std::outputln(out);
+            std::flush();
+            srd::exit(255);
+        }
+    }
+}
+
+not std::Error;
