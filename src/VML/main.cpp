@@ -36,6 +36,11 @@ int main(int argc, char *argv[]) {
          return 0;
     }
     
+    // Some static varibles
+    static const string magicString = "This is vml's.";
+    static const ui8 magicStringLength = magicString.length();
+    
+    // varible
     string &path = argvec[1]; // get path
     ifstream fin(path, ios::binary); // Open the file
     Array<ui8, 0xA0000> memory; // Memory, 0xa0000 bytes
@@ -50,7 +55,14 @@ int main(int argc, char *argv[]) {
     string datas;
     pair<ui16, ui8*> group;
     
-    for (ui64 i = 0; i < programLength;) {
+    string fileString = string(program.begin(), program.begin() + magicStringLength);
+    if (fileString != magicString) {
+        output("This is not a vml program.\n");
+        flush();
+        return -1;
+    }
+    
+    for (ui64 i = magicStringLength; i < programLength;) {
         // Make some groups for this program
         readCharNumber = static_cast<ui8>(program[i]); // Theoretically, i8 and char is same. But i8 type lookblike a number.
         datas = string(

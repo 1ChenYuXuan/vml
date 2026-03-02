@@ -39,3 +39,7 @@ ALWAYS_INLINE std::string input(const char str) {
     std::getline(std::cin, s);
     return s;
 }
+
+ALWAYS_INLINE void flush() {
+    fflush(stdout);
+}

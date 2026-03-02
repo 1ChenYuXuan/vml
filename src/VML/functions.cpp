@@ -14,13 +14,12 @@ FUNCTION funcs::MOV(FUNCTION_ARG) {
     
     bytes = *p;
     p++;
-    location = *(ui32*)p;
+    memcpy(&location, p, 4); // TODO: Replace this with cross-platform it
     p+=4;
     if (!(bytes == 1 || bytes == 2 || bytes == 4 || bytes == 8)) 
         throw std::runtime_error("Try to move noncompliant bytes.");
-    for (ui8 i = 0; i < bytes; ++i) {
+    for (ui8 i = 0; i < bytes; ++i)
        memory[location + i] = p[i];
-    }
 }
 
 std::array<std::function<FuncSig>, 65536> functions;

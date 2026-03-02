@@ -15,3 +15,4 @@ ALWAYS_INLINE void output(const char c);
 ALWAYS_INLINE std::string input();
 ALWAYS_INLINE std::string input(const std::string &str);
 ALWAYS_INLINE std::string input(const char str);
+ALWAYS_INLINE void flush();
