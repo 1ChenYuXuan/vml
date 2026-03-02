@@ -9,12 +9,17 @@ FUNCTION funcs::MOV(FUNCTION_ARG) {
     // 4 is 4bytes.
     // 8 is 8bytes.
     // else thing is error.
-    ui8 bytes = *p;
+    ui8 bytes;
+    ui32 location;
+    
+    bytes = *p;
     p++;
+    location = *(ui32*)p;
+    p+=4;
     if (!(bytes == 1 || bytes == 2 || bytes == 4 || bytes == 8)) 
         throw std::runtime_error("Try to move noncompliant bytes.");
-    for (ui8 h = 0; h < bytes; ++h) {
-        // TODO: Do move datas.
+    for (ui8 i = 0; i < bytes; ++i) {
+       memory[location + i] = p[i];
     }
 }
 

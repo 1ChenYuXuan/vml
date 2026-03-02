@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <cstdint>
 #include <cmath>
 #include <array>
 #include <cstdlib>
@@ -70,7 +71,8 @@ private:
 public:
     Array();
     ~Array();
-    T operator[](ui32 index);
+    T &operator[](ui32 index);
+    const T &operator[](ui32 index) const;
     T *get();
 };
 
@@ -85,7 +87,13 @@ Array<T, size>::~Array() {
 }
 
 template<typename T, ui32 size>
-T Array<T, size>::operator[](ui32 index) {
+T &Array<T, size>::operator[](ui32 index) {
+    return p[index]; // Maybe cause Segment Error.
+                     // TODO: Throw
+}
+
+template<typename T, ui32 size>
+const T &Array<T, size>::operator[](ui32 index) const {
     return p[index]; // Maybe cause Segment Error.
                      // TODO: Throw
 }

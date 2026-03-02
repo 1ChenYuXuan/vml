@@ -1,16 +1,16 @@
-
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Chen Yuxuan
 
-#include "../../libs/stddef.hpp"
-#include "../../libs/algorithm.hpp"
-#include "../../libs/functions.hpp"
+#include "functions.hpp"
 #include <fstream>
 #include <string>
 #include <array>
 #include <vector>
 #include <fstream>
 #include <string>
+#include <utility>
+#include <cstring>
+#include <cstdlib>
 
 std::string load_file(const char* path) {
     std::ifstream ifs(path, std::ios::binary | std::ios::ate);
@@ -24,7 +24,7 @@ std::string load_file(const char* path) {
 
 int main(int argc, char *argv[]) {
     // Builds argnum and argvec first
-    using std::string, std::vector, std::array, std::ios, std::ifstream;
+    using std::string, std::vector, std::array, std::ios, std::ifstream, std::pair;
     ui32 argnum = (ui32)argc;
     vector<string> argvec;
     for (ui32 index = 0; index < argnum; ++index)
@@ -36,15 +36,49 @@ int main(int argc, char *argv[]) {
          return 0;
     }
     
-    string path = argvec[1];
-    ifstream fin(path, ios::binary);
+    string &path = argvec[1]; // get path
+    ifstream fin(path, ios::binary); // Open the file
+    Array<ui8, 0xA0000> memory; // Memory, 0xa0000 bytes
+    string program = load_file(path.c_str()); // load program
+    vector<pair<ui16, ui8*>> groups;
+    ui32 programLength = program.length();
+    ui8 readCharNumber;
+    auto start = program.begin();
+    auto end = program.end();
+    auto location = start;
+    ui16 cmd;
+    string datas;
+    pair<ui16, ui8*> group;
     
-    Array<ui8, 0xA0000> memory;
-    
-    string program = load_file(path.c_str());
-    vector<string> groups;
-    for (int i = 0; i < program.length(); )
-    // TODO： Load the whole program and excute it.
+    for (ui64 i = 0; i < programLength;) {
+        // Make some groups for this program
+        readCharNumber = static_cast<ui8>(program[i]); // Theoretically, i8 and char is same. But i8 type lookblike a number.
+        datas = string(
+            program.begin() + i + 1,
+            program.begin() + i + 1 + readCharNumber
+        );
+
+        if (datas.size() >= 2) 
+            std::memcpy(&cmd, datas.data(), 2);
+        else 
+            cmd = 0;
+
+        ui8* data_ptr = (ui8*)std::malloc(datas.size() - 2);
+        if (data_ptr && datas.size() > 2) {
+            std::memcpy(data_ptr, datas.data() + 2, datas.size() - 2);
+        }
+
+        groups.push_back(pair<ui16, ui8*>(cmd, data_ptr)); // push datas to groups
+        i += readCharNumber + 1; // Jump next location
+    }
+
+    for (ui32 i = 0; i < groups.size();) { // Use some function to change the i as ptr
+        group = groups[i];
+        functions[group.first](group.second, memory, i);
+    }
+
+    for (auto& p : groups) 
+        std::free(p.second);
     
     return 0;
 }
@@ -68,5 +102,5 @@ int main(int argc, char *argv[]) {
              \  \ `-.   \_ __\ /__ _/   .-` /  /
         ======`-.____`-.___\_____/___.-`____.-'======
                            `=---='
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 */
