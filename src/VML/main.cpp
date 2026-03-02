@@ -9,6 +9,18 @@
 #include <string>
 #include <array>
 #include <vector>
+#include <fstream>
+#include <string>
+
+std::string load_file(const char* path) {
+    std::ifstream ifs(path, std::ios::binary | std::ios::ate);
+    std::streamsize size = ifs.tellg();
+    ifs.seekg(0);
+
+    std::string content(size, '\0');
+    ifs.read(&content[0], size);
+    return content;
+}
 
 int main(int argc, char *argv[]) {
     // Builds argnum and argvec first
@@ -28,23 +40,11 @@ int main(int argc, char *argv[]) {
     ifstream fin(path, ios::binary);
     
     Array<ui8, 0xA0000> memory;
-    char readNum[1];
-    char arguments[256];
-    char *argsp = arguments;
-    bool isOver;
-    ui16 cmd;
-    while (1)
-    {
-        fin.read(readNum, 1);
-        isOver = !fin;
-        if (isOver)
-            return 0;
-        
-        fin.read(arguments, readNum[0]);
-        cmd = *(ui16*)argsp;
-        argsp += 2;
-        functions[cmd](argsp, memory);
-    }
+    
+    string program = load_file(path.c_str());
+    vector<string> groups;
+    for (int i = 0; i < program.length(); )
+    // TODO： Load the whole program and excute it.
     
     return 0;
 }
