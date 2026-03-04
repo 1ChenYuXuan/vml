@@ -14,7 +14,7 @@
 #if defined(_MSC_VER)
   #define ALWAYS_INLINE __forceinline
 #else
-  #define ALWAYS_INLINE __attribute__((always_inline))
+  #define ALWAYS_INLINE inline __attribute__((always_inline)) // I use it but the Vscodse dosen't support it. But I will use it.
 #endif
 
 #define transmitc auto&
@@ -34,34 +34,30 @@ using i64 = int64_t;
 using f32 = float;
 using f64 = double;
 
-#if defined(__LDBL_MANT_DIG__) || defined(LDBL_MANT_DIG)
-    using f128 = long double;
-#endif
-
-enum class cmd: ui16 {
-    add,
-    sub,
-    mul,
-    div,
-    big,
-    small,
-    equal,
-    band,
-    bor,
-    bnot,
+enum : ui16 {
+    VML_add, // 00
+    VML_sub, // 01
+    VML_mul, // 02
+    VML_div, // 03
+    VML_big, // 04
+    VML_small, // 05
+    VML_equal, // 06
+    VML_band, // 07
+    VML_bor, // 08
+    VML_bnot, // 09
     
-    output,
-    input,
-    mov,
-    load,
-    store,
-    inc,
-    dec,
+    VML_output, // 10
+    VML_input, // 11
+    VML_mov, // 12
+    VML_load, // 13
+    VML_store, // 14
+    VML_inc, // 15
+    VML_dec, // 16
     
-    cmp,
-    go,
-    capi
-};
+    VML_cmp, // 17
+    VML_go, // 18
+    VML_capi // 19
+} cmd;
 
 template<typename T, ui32 size>
 class Array // myself array
