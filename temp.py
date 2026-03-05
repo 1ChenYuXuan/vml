@@ -21,7 +21,11 @@ def main() -> None:
     with open(path, 'w') as file:
         file.write('This is vml\'s.')
     byteslist: list[int] = [
-        2, 0, 12
+        6, 0, 12, # MOV function.
+        1, # 1 byte.
+        128, # a data.
+        0, 
+        0 # location
     ]
     for byte in byteslist:
         write(path, bytes(chr(byte), 'utf-8'))

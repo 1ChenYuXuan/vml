@@ -21,6 +21,14 @@
 #define transmitv auto
 #define transmitvc auto&&
 
+#define DEBUG
+
+#ifdef DEBUG
+    #include <iostream>
+    using std::cout, std::endl;
+#endif
+
+
 using ui8  = uint8_t;
 using ui16 = uint16_t;
 using ui32 = uint32_t;
@@ -75,6 +83,8 @@ public:
 template<typename T, ui32 size>
 Array<T, size>::Array() {
     p = new T[size];
+    for (ui32 i = 0; i < size; ++i)
+        p[i] = T();
 }
 
 template<typename T, ui32 size>

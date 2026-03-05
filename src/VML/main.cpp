@@ -10,13 +10,6 @@
 #include <cstring>
 #include <cstdlib>
 
-#define DEBUG
-
-#ifdef DEBUG
-    #include <iostream>
-    using std::cout, std::endl;
-#endif
-
 char *load_file(const char* path) {
     std::ifstream ifs(path, std::ios::binary | std::ios::ate);
     if (!ifs) return nullptr;
@@ -32,7 +25,7 @@ char *load_file(const char* path) {
 
 int main(int argc, char *argv[]) {
     // Builds argnum and argvec first
-    using std::string, std::vector, std::array, std::ios, std::ifstream, std::pair;
+    using std::string, std::vector, std::array, std::ios, std::ifstream, std::pair, std::runtime_error, std::memcpy, std::malloc, std::free;
     ui32 argnum = (ui32)argc;
     vector<string> argvec;
     for (ui32 index = 0; index < argnum; ++index)
@@ -63,7 +56,7 @@ int main(int argc, char *argv[]) {
     }
     ui32 programLength = static_cast<ui32>(s_size);
     fin.seekg(0);
-    Array<ui8, 0xA0000> memory; // Memory, 0xa0000 bytes
+    Array<ui8, 0x10000> memory; // Memory, 0xa0000 bytes
     char *program = load_file(path.c_str()); // load program
     if (!program) {
         output("Failed to read file.\n");
@@ -85,9 +78,13 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    for (ui64 i = magicStringLength; i < programLength;) {
+    for (ui64 i = magicStringLength; i < programLength-1;) {
         // Make some groups for this program
         readCharNumber = static_cast<ui8>(program[i]); // Theoretically, ui8 and char is same. But i8 type lookblike a number.
+        #ifdef DEBUG
+            cout << "Read command with data size " << (ui32)readCharNumber << ".\n";
+            cout << "i: " << i << endl;
+        #endif
         datas = string(
             start + i + 1,
             start + i + 1 + readCharNumber
@@ -96,16 +93,18 @@ int main(int argc, char *argv[]) {
         if (datas.size() >= 2) 
             cmd = (static_cast<ui16>(datas[0]) << 8) | static_cast<ui8>(datas[1]);
         else 
-            throw std::runtime_error("Invalid command data size.");
+            throw runtime_error("Invalid command data size.");
 
         ui8* data_ptr = nullptr;
         if (datas.size() > 2) {
-            data_ptr = (ui8*)std::malloc(datas.size() - 2);
+            data_ptr = (ui8*)malloc(datas.size() - 2);
             if (data_ptr)
-                std::memcpy(data_ptr, datas.data() + 2, datas.size() - 2);
+                memcpy(data_ptr, datas.data() + 2, datas.size() - 2);
         }
 
-        cout << "Read command " << cmd << " with data size " << datas.size() - 2 << ".\n";
+        #ifdef DEBUG
+            cout << "Read command " << cmd << " with data size " << datas.size() - 2 << ".\n";
+        #endif
 
         groups.push_back(pair<ui16, ui8*>(cmd, data_ptr)); // push datas to groups
         i += readCharNumber + 1; // Jump next location
@@ -113,14 +112,14 @@ int main(int argc, char *argv[]) {
 
     for (ui32 i = 0; i < groups.size();) { // Use some function to change the i as ptr
         group = groups[i];
+        functions[group.first](group.second, memory, i);
         #ifdef DEBUG
             cout << "Executing command " << group.first << "...\n";
         #endif
-        functions[group.first](group.second, memory, i);
     }
-
+    
     for (auto& p : groups) 
-        std::free(p.second);
+        free(p.second);
     
     return 0;
 }

@@ -11,7 +11,7 @@ FUNCTION funcs::MOV(FUNCTION_ARG) {
     // else thing is error.
     ui8 bytes;
     ui32 location;
-    
+
     bytes = *p;
     p++;
     memcpy(&location, p, 4); // TODO: Replace this with cross-platform it
@@ -20,6 +20,13 @@ FUNCTION funcs::MOV(FUNCTION_ARG) {
         throw std::runtime_error("Try to move noncompliant bytes.");
     for (ui8 i = 0; i < bytes; ++i)
         memory[location + i] = p[i];
+    cout << "test" << endl;
+    #ifdef DEBUG
+        for (ui16 i = 0; i < 0x10; ++i) {
+            cout << (ui32)memory[i] << " ";
+        }
+        cout << endl;
+    #endif
 }
 
 FUNCTION funcs::ADD(FUNCTION_ARG) {
@@ -674,7 +681,7 @@ FUNCTION funcs::DIV(FUNCTION_ARG) {
 
 // TODO: Use macro to replace them with few code. But I don't have much time to di it, so I will do it later.
 
-std::array<std::function<FuncSig>, 65536> functions;
+std::array<std::function<FuncSig>, 0x10000> functions;
 
 void functionsInit() {
     functions[VML_mov] = funcs::MOV;
